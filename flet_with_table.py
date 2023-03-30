@@ -15,29 +15,41 @@ async def main(page: ft.Page):
             ft.DataColumn(ft.Text("Temperatura")),
             ft.DataColumn(ft.Text("Humidade")),
         ],
-        rows=[
-            ft.DataRow(
-                cells=[
-                    ft.DataCell(ft.Text("--°C")),
-                    ft.DataCell(ft.Text("--%")),
-                ],
-            ),
-        ],
+        rows=[],
     )
 
     # Add widgets to page
     await page.add_async(txt)
     await page.add_async(table)
 
+    # List to store last 10 temperature and humidity values
+    values = []
+
     async def update_values():
+        nonlocal values
+
         while True:
             # Generate random temperature and humidity values
             temperature = random.randint(0, 50)
             humidity = random.randint(20, 80)
 
-            # Update the table with the new values
-            table.rows[0].cells[0].content.value = f"{temperature}°C"
-            table.rows[0].cells[1].content.value = f"{humidity}%"
+            # Add new value to the list
+            values.append((temperature, humidity))
+
+            # Keep only the last 10 values
+            values = values[-10:]
+
+            # Update the table with the last 10 values
+            rows = []
+            for temp, hum in values:
+                row = ft.DataRow(
+                    cells=[
+                        ft.DataCell(ft.Text(f"{temp}°C")),
+                        ft.DataCell(ft.Text(f"{hum}%")),
+                    ],
+                )
+                rows.append(row)
+            table.rows = rows
 
             # Update the page with the new values
             await page.update_async()
