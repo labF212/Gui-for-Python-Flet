@@ -34,18 +34,23 @@ def main(page: ft.Page):
 
     def help_clicked(e):
         dialog = ft.AlertDialog(
-            title=ft.Text("Como usar"),
-            content=ft.Column([
-                ft.Text("Coloque algo na caixa de texto."),
-                ft.Text("Grave o que escreveu no botão gravar."),
-                ft.Text("Apague o que escreveu com o botão Apagar.")
+            title=ft.Text(value="Como usar", text_align="CENTER", weight="BOLD"),
+            content=ft.Row([
+                ft.Icon(name=ft.icons.QUESTION_MARK_OUTLINED, color=ft.colors.PINK,size=60),
+                ft.Column([
+                    ft.Text("Coloque algo na caixa de texto."),
+                    ft.Text("Grave o que escreveu no botão gravar."),
+                    ft.Text("Apague o que escreveu com o botão Apagar.")
+                ],expand=False),
             ],expand=False),
             actions=[ft.TextButton("OK", on_click=lambda e: close_dlg(dialog))],
+            
             on_dismiss=lambda e: print("Dialog dismissed!"),
         )
         page.dialog = dialog
         dialog.open = True
         page.update()
+
 
     def close_dlg1(dialog1):
         dialog1.open = False
