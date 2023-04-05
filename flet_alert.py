@@ -12,6 +12,7 @@ def main(page: ft.Page):
             title=ft.Text("Caixa de texto vazia"),
             content=ft.Text("Introduza dados na caixa primeiro"),
             actions=[ft.TextButton("OK", on_click=lambda e: close_dlg1(dialog1))],
+            actions_alignment=ft.MainAxisAlignment.CENTER,
         )
         page.dialog = dialog1
         dialog1.open = True
@@ -41,9 +42,10 @@ def main(page: ft.Page):
                     ft.Text("Coloque algo na caixa de texto."),
                     ft.Text("Grave o que escreveu no botão gravar."),
                     ft.Text("Apague o que escreveu com o botão Apagar.")
-                ],expand=False),
-            ],expand=False),
-            actions=[ft.TextButton("OK", on_click=lambda e: close_dlg(dialog))],
+                ],tight=True),
+            ]),
+            actions=[ft.TextButton("OK", expand="True",on_click=lambda e: close_dlg(dialog))],
+            actions_alignment=ft.MainAxisAlignment.CENTER,
             
             on_dismiss=lambda e: print("Dialog dismissed!"),
         )
