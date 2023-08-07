@@ -25,12 +25,14 @@ def main(page: ft.Page):
             slider2.visible = True
             pwm_label1.visible = True
             pwm_label2.visible = True
+            print("manual")
             
         else:
             slider1.visible = False
             slider2.visible = False
             pwm_label1.visible = True
             pwm_label2.visible = True
+            print("automatic")
             
             
             #Fading up and down...
