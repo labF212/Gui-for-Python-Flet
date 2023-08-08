@@ -7,7 +7,6 @@ def main(page: ft.Page):
     slider1_value = 0
     slider2_value = 0
     
-    
     def slider_changed(e):
         nonlocal slider1_value, slider2_value
         if e.control == slider1:
@@ -18,24 +17,21 @@ def main(page: ft.Page):
             pwm_label4.value = f"{slider2_value} PWD"
         page.update()
         
-    def radiogroup_changed(value):  # Receive the selected value directly
-        
-        if value == "manual":  # Access the selected value directly
+    def radiogroup_changed(e):  # Receive the selected value directly
+        if e.control.value == "Manual":
             slider1.visible = True
             slider2.visible = True
             pwm_label1.visible = True
             pwm_label2.visible = True
-            print("manual")
-            
+            print("Manual")
         else:
             slider1.visible = False
             slider2.visible = False
             pwm_label1.visible = True
             pwm_label2.visible = True
-            print("automatic")
+            print("Automatic")
             
-            
-            #Fading up and down...
+            # Fading up and down...
             for i in range(255):
                 time.sleep(.05)
                 pwm_label2.value = f"{i} PWD"
@@ -75,9 +71,10 @@ def main(page: ft.Page):
     button_center = ft.Row([button_exit], alignment=ft.MainAxisAlignment.CENTER, spacing=10)
 
     cg = ft.RadioGroup(
+        value="Manual",
         content=ft.Row([
-            ft.Radio(value="manual", label="Manual"),  
-            ft.Radio(value="auto", label="Automatic"),
+            ft.Radio(value="Manual", label="Manual"),  
+            ft.Radio(value="Automatic", label="Automatic"),
         ]),
         on_change=radiogroup_changed
     )
@@ -95,9 +92,5 @@ def main(page: ft.Page):
         row3,
         button_center
     )
-
-    # Set initial value of the radio group to "manual"
-    cg.value = "manual"
-    radiogroup_changed(cg.value)  # Call the radiogroup_changed function to show the sliders accordingly
 
 ft.app(target=main)
