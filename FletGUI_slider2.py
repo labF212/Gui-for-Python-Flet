@@ -16,29 +16,40 @@ def main(page: ft.Page):
             slider2_value = int(e.control.value)
             pwm_label4.value = f"{slider2_value} PWD"
         page.update()
+    
         
     def radiogroup_changed(e):  # Receive the selected value directly
         if e.control.value == "Manual":
             slider1.visible = True
             slider2.visible = True
-            pwm_label1.visible = True
-            pwm_label2.visible = True
-            print("Manual")
+            #pwm_label1.visible = True
+            #pwm_label2.visible = True
+            #print("Manual")
         else:
             slider1.visible = False
             slider2.visible = False
-            pwm_label1.visible = True
-            pwm_label2.visible = True
-            print("Automatic")
+            #pwm_label1.visible = True
+            #pwm_label2.visible = True
+            #print("Automatic")
             
             # Fading up and down...
             for i in range(255):
+                if e.control.value == "Manual":
+                    pwm_label2.value = "0 PWD"
+                    pwm_label4.value = "0 PWD"
+                    page.update()
+                    break
                 time.sleep(.05)
                 pwm_label2.value = f"{i} PWD"
                 pwm_label4.value = f"{255-i} PWD"
                 page.update()
                 
             for i in range(255):
+                if e.control.value == "Manual":
+                    pwm_label2.value = "0 PWD"
+                    pwm_label4.value = "0 PWD"
+                    page.update()
+                    break
                 time.sleep(.05)
                 pwm_label2.value = f"{255-i} PWD"
                 pwm_label4.value = f"{i} PWD"
@@ -47,8 +58,11 @@ def main(page: ft.Page):
     def exit_app(_):
         page.window_destroy()
 
+
+    #Building Interface
+    
     pwm_label1 = ft.Text("LED in pin 6")
-    pwm_label2 = ft.Text(expand=True, text_align=ft.TextAlign.END)
+    pwm_label2 = ft.Text("0 PWD", expand=True, text_align=ft.TextAlign.END)
 
     row1 = ft.Row([
         pwm_label1,
@@ -56,7 +70,7 @@ def main(page: ft.Page):
     ])
 
     pwm_label3 = ft.Text("LED in pin 5")
-    pwm_label4 = ft.Text(expand=True, text_align=ft.TextAlign.END)
+    pwm_label4 = ft.Text("0 PWD",expand=True, text_align=ft.TextAlign.END)
 
     slider1 = ft.Slider(value=0, min=0, max=254, on_change=slider_changed)
 
@@ -92,5 +106,7 @@ def main(page: ft.Page):
         row3,
         button_center
     )
+
+
 
 ft.app(target=main)
