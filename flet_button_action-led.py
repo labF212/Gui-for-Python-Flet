@@ -17,6 +17,10 @@ def main(page: ft.Page):
     # Título
     title = ft.Text("Controlo de Relé", size=24, weight="bold")
 
+    # Etiquetas "Entradas" e "Saídas" centralizadas acima dos contêineres
+    entradas_label = ft.Text("Entradas", size=18, weight="bold", text_align=ft.TextAlign.CENTER)
+    saidas_label = ft.Text("Saídas", size=18, weight="bold", text_align=ft.TextAlign.CENTER)
+
     # Ícone do LED maior e rótulo
     led_icon = ft.Icon(name=ft.icons.CIRCLE, color="red", size=60)  # LED com tamanho maior
     led_label = ft.Text("Relé 1", size=14, color="black")  # Cor do texto alterada para preto
@@ -31,7 +35,8 @@ def main(page: ft.Page):
         padding=10,
         bgcolor="yellow",
         border_radius=8,
-        width=100,
+        width=120,
+        height=100,  # Define a altura fixa
         alignment=ft.alignment.center
     )
 
@@ -52,14 +57,42 @@ def main(page: ft.Page):
         tooltip="Desliga o relé"
     )
 
-    # Coloca os botões e o contêiner do LED em uma linha
-    control_row = ft.Row(
-        [ligar_button, desligar_button, led_container],
-        alignment=ft.MainAxisAlignment.CENTER,
-        spacing=10
+    # Contêiner amarelo para os botões, com largura suficiente para os botões ficarem lado a lado
+    buttons_container = ft.Container(
+        content=ft.Row(
+            [ligar_button, desligar_button],
+            alignment=ft.MainAxisAlignment.CENTER,
+            spacing=10
+        ),
+        padding=10,
+        bgcolor="yellow",
+        border_radius=8,
+        width=350,  # Largura suficiente para os botões
+        height=100,  # Define a altura fixa para alinhamento com o contêiner do LED
+        alignment=ft.alignment.center
     )
 
-    # Adiciona os elementos à página
+    # Colunas para "Entradas" e "Saídas", contendo os labels e os respectivos contêineres
+    entradas_column = ft.Column(
+        [entradas_label, buttons_container],
+        alignment=ft.MainAxisAlignment.CENTER,
+        horizontal_alignment=ft.CrossAxisAlignment.CENTER  # Centraliza os itens horizontalmente
+    )
+
+    saidas_column = ft.Column(
+        [saidas_label, led_container],
+        alignment=ft.MainAxisAlignment.CENTER,
+        horizontal_alignment=ft.CrossAxisAlignment.CENTER  # Centraliza os itens horizontalmente
+    )
+
+    # Linha principal com ambas as colunas centralizadas
+    control_row = ft.Row(
+        [entradas_column, saidas_column],
+        alignment=ft.MainAxisAlignment.CENTER,
+        spacing=20
+    )
+
+    # Adiciona o título e a linha de controle à página
     page.add(title, control_row)
 
 ft.app(target=main)
