@@ -4,72 +4,58 @@ import flet as ft
 import csv
 
 async def main(page: ft.Page):
-    # Create title text widget
-    txt_title = ft.Text(value="Medição de Temperatura e Humidade", text_align="CENTER", weight="BOLD")
-        
-    # Create temperature text widget
-    txt_temperature = ft.Text(value="Temperatura: --°C")
+    # Configurações iniciais da página
+    page.title = "Medição de Temperatura e Humidade"
+    page.horizontal_alignment = ft.CrossAxisAlignment.CENTER
 
-    # Create humidity text widget
+    # Widgets iniciais
+    txt_title = ft.Text(value="Medição de Temperatura e Humidade", text_align="center", weight="bold")
+    txt_temperature = ft.Text(value="Temperatura: --°C")
     txt_humidity = ft.Text(value="Humidade: --%")
 
-    # Add widgets to page
-    await page.add_async(txt_title)
-    await page.add_async(txt_temperature)
-    await page.add_async(txt_humidity)
+    # Adicionando widgets à página
+    page.add(txt_title, txt_temperature, txt_humidity)
 
-    # Update widgets with initial values
-    temperature = random.randint(0, 50)
-    humidity = random.randint(20, 80)
-    txt_temperature.value = f"Temperatura: {temperature}°C"
-    txt_humidity.value = f"Humidade: {humidity}%"
+    # Inicializar o arquivo CSV com cabeçalho
+    csv_file_path = "flet.csv"
+    fieldnames = ['Temperature', 'Humidity']
+
+    with open(csv_file_path, mode='w', newline='') as csv_file:
+        writer = csv.DictWriter(csv_file, fieldnames=fieldnames)
+        writer.writeheader()
 
     async def update_values():
-        #The csv file will be on HOME folder
-        with open('flet.csv', mode='w', newline='') as csv_file:
-            fieldnames = ['Temperature', 'Humidity']
-            writer = csv.DictWriter(csv_file, fieldnames=fieldnames)
-            writer.writeheader()
-
         while True:
-            # Center the page horizontally
-            page.horizontal_alignment = ft.CrossAxisAlignment.CENTER
-            
-            # Generate random temperature and humidity values
+            # Gerar valores aleatórios
             temperature = random.randint(0, 50)
             humidity = random.randint(20, 80)
 
-            # Update the text widgets
+            # Atualizar widgets
             txt_temperature.value = f"Temperatura: {temperature}°C"
             txt_humidity.value = f"Humidade: {humidity}%"
+            page.update()  # Atualizar página sincronamente
 
-            # Open the CSV file for appending and write the data
-            with open('flet.csv', mode='a', newline='') as csv_file:
+            # Adicionar os valores ao CSV
+            with open(csv_file_path, mode='a', newline='') as csv_file:
                 writer = csv.DictWriter(csv_file, fieldnames=fieldnames)
                 writer.writerow({'Temperature': temperature, 'Humidity': humidity})
 
-            # Limit the number of rows to 100
-            with open('flet.csv', mode='r', newline='') as csv_file:
-                num_lines = sum(1 for line in csv_file) - 1  # subtract 1 for the header row
-                if num_lines >= 100:
-                    # Delete the oldest row
-                    with open('flet.csv', mode='r', newline='') as csv_file:
-                        reader = csv.DictReader(csv_file)
-                        rows = [row for row in reader]
-                        del rows[0]
-                    # Write the remaining rows to the file
-                    with open('flet.csv', mode='w', newline='') as csv_file:
-                        writer = csv.DictWriter(csv_file, fieldnames=fieldnames)
-                        writer.writeheader()
-                        writer.writerows(rows)
+            # Manter apenas as últimas 100 linhas no arquivo CSV
+            with open(csv_file_path, mode='r', newline='') as csv_file:
+                rows = list(csv.DictReader(csv_file))
 
-            # Update the page with the new values
-            await page.update_async()
+            if len(rows) > 100:
+                rows = rows[-100:]  # Pega as últimas 100 linhas
+                with open(csv_file_path, mode='w', newline='') as csv_file:
+                    writer = csv.DictWriter(csv_file, fieldnames=fieldnames)
+                    writer.writeheader()
+                    writer.writerows(rows)
 
-            # Sleep for 1 second
+            # Aguardar 1 segundo
             await asyncio.sleep(1)
 
-    # Start updating the values
+    # Iniciar a tarefa assíncrona
     asyncio.create_task(update_values())
 
-ft.app(main)
+# Iniciar o app
+ft.app(target=main)
