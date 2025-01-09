@@ -61,6 +61,33 @@ def read_measurements(file_name, page, table, ax, line_1, line_2, header_text):
         )
         page.update()
 
+def sobre_e_ajuda(page):
+    dialog = ft.AlertDialog(
+        title=ft.Text("Sobre e Ajuda"),
+        content=ft.Text(
+            "Este é um aplicativo de leitura de distâncias utilizando sensores HC-SR04.\n\n"
+            "Autor: Seu Nome\nVersão: 1.0\n\n"
+            "Para mais informações, consulte a documentação."
+        ),
+        actions=[
+            ft.TextButton(
+                "Fechar",
+                on_click=lambda e: close_dialog(page, dialog)
+            ),
+        ],
+    )
+
+    # Adicionando o diálogo aos overlays da página
+    if dialog not in page.overlay:
+        page.overlay.append(dialog)
+    dialog.open = True
+    page.update()
+
+
+def close_dialog(page, dialog):
+    dialog.open = False
+    page.update()
+
 # Função principal do Flet
 async def main(page: ft.Page):
     page.title = "Leitura HC-SR04 com Telemetrix e Flet"
@@ -120,6 +147,20 @@ async def main(page: ft.Page):
         height=600
     )
 
+    # Criando o pop-up (Dialog)
+    dialog = ft.AlertDialog(
+        title=ft.Text("Título do Pop-Up"),
+        content=ft.Text("Este é o conteúdo do pop-up."),
+        actions=[
+            ft.TextButton(
+                "Fechar",
+                on_click=lambda e: dialog.close()
+            ),
+        ],
+    )
+
+
+
     # Botões para leitura de ficheiros
     buttons_container = ft.Container(
         content=ft.Column(
@@ -163,6 +204,12 @@ async def main(page: ft.Page):
                         text="Sair", icon=ft.Icons.EXIT_TO_APP, width=200,
                         tooltip="Sair do Programa",
                         on_click=lambda e: page.window.close()
+                    ),
+                                
+                    ft.ElevatedButton(
+                        text="Sobre", icon=ft.Icons.HELP, width=200,
+                        tooltip="Sobre e Ajuda",
+                        on_click=lambda e: sobre_e_ajuda(page)
                     ),
                 ], alignment=ft.MainAxisAlignment.CENTER),
             ],
