@@ -17,7 +17,7 @@ def main(page: ft.Page):
         page.update()
         
     def exit_app(_):
-        page.window_destroy()
+        page.window_close()
 
     pwm_label1 = ft.Text("LED in pin 6")
     pwm_label2 = ft.Text(expand=True,text_align=ft.TextAlign.END)
@@ -39,7 +39,7 @@ def main(page: ft.Page):
 
     slider2 = ft.Slider(value=0, min=0, max=254, on_change=slider_changed)
     
-    button_exit= ft.ElevatedButton("Exit", icon=ft.icons.EXIT_TO_APP, on_click=exit_app)
+    button_exit= ft.ElevatedButton("Exit", icon=ft.Icons.EXIT_TO_APP, on_click=exit_app)
     button_center = ft.Row([button_exit], alignment=ft.MainAxisAlignment.CENTER, spacing=10)
 
     page.add(

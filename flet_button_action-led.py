@@ -22,7 +22,7 @@ def main(page: ft.Page):
     saidas_label = ft.Text("Saídas", size=18, weight="bold", text_align=ft.TextAlign.CENTER)
 
     # Ícone do LED maior e rótulo
-    led_icon = ft.Icon(name=ft.icons.CIRCLE, color="red", size=60)  # LED com tamanho maior
+    led_icon = ft.Icon(name=ft.Icons.CIRCLE, color="red", size=60)  # LED com tamanho maior
     led_label = ft.Text("Relé 1", size=14, color="black")  # Cor do texto alterada para preto
 
     # LED e label em uma coluna centralizada dentro do contêiner amarelo
@@ -44,7 +44,7 @@ def main(page: ft.Page):
     ligar_button = ft.ElevatedButton(
         "Ligar Relé",
         on_click=ligar_rele,
-        icon=ft.icons.POWER,
+        icon=ft.Icons.POWER,
         icon_color="green600",
         tooltip="Liga o relé"
     )
@@ -52,7 +52,7 @@ def main(page: ft.Page):
     desligar_button = ft.ElevatedButton(
         "Desligar Relé",
         on_click=desligar_rele,
-        icon=ft.icons.POWER_OFF,
+        icon=ft.Icons.POWER_OFF,
         icon_color="red600",
         tooltip="Desliga o relé"
     )

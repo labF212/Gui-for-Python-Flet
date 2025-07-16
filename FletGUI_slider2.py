@@ -7,7 +7,8 @@ def main(page: ft.Page):
     page.window_width = 200
     page.window_height = 200
     #page.theme_mode = "light"
-    page.theme = ft.Theme(visual_density=ft.ThemeVisualDensity.ADAPTIVEPLATFORMDENSITY)
+    page.theme = ft.Theme(color_scheme_seed=ft.Colors.GREEN)
+    page.dark_theme = ft.Theme(color_scheme_seed=ft.Colors.BLUE)
     
     slider1_value = 0
     slider2_value = 0
@@ -86,7 +87,7 @@ def main(page: ft.Page):
 
     slider2 = ft.Slider(value=0, min=0, max=254, on_change=slider_changed)
     
-    button_exit = ft.ElevatedButton("Exit", icon=ft.icons.EXIT_TO_APP, on_click=exit_app)
+    button_exit = ft.ElevatedButton("Exit", icon=ft.Icons.EXIT_TO_APP, on_click=exit_app)
     button_center = ft.Row([button_exit], alignment=ft.MainAxisAlignment.CENTER, spacing=10)
 
     cg = ft.RadioGroup(

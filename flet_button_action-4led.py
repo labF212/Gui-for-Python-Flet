@@ -19,7 +19,7 @@ def main(page: ft.Page):
     # Função auxiliar para criar um conjunto de botões e LED para cada relé
     def create_rele_controls(rele_number):
         # LED ícone e rótulo
-        led_icon = ft.Icon(name=ft.icons.CIRCLE, color="red", size=60)
+        led_icon = ft.Icon(name=ft.Icons.CIRCLE, color="red", size=60)
         led_label = ft.Text(f"Relé {rele_number}", size=14, color="black")
 
         # Contêiner amarelo para o LED e o rótulo
@@ -41,7 +41,7 @@ def main(page: ft.Page):
         ligar_button = ft.ElevatedButton(
             f"Ligar Relé {rele_number}",
             on_click=lambda e: ligar_rele(led_icon),
-            icon=ft.icons.POWER,
+            icon=ft.Icons.POWER,
             icon_color="green600",
             tooltip=f"Liga o Relé {rele_number}"
         )
@@ -49,7 +49,7 @@ def main(page: ft.Page):
         desligar_button = ft.ElevatedButton(
             f"Desligar Relé {rele_number}",
             on_click=lambda e: desligar_rele(led_icon),
-            icon=ft.icons.POWER_OFF,
+            icon=ft.Icons.POWER_OFF,
             icon_color="red600",
             tooltip=f"Desliga o Relé {rele_number}"
         )

@@ -84,8 +84,8 @@ async def main(page: ft.Page):
     # Create widget
     txt_temperature = ft.Text(value="Temperatura: --°C")  
     txt_humidity = ft.Text(value="Humidade: --%")
-    start_button = ft.ElevatedButton("Save", on_click=start_clicked,tooltip="Guarda os dados",icon=ft.icons.SAVE,icon_color="green600")
-    stop_button = ft.ElevatedButton("Stop", on_click=stop_clicked,tooltip="Para a gravação",icon=ft.icons.STOP,icon_color="pink600")
+    start_button = ft.ElevatedButton("Save", on_click=start_clicked,tooltip="Guarda os dados",icon=ft.Icons.SAVE,icon_color="green600")
+    stop_button = ft.ElevatedButton("Stop", on_click=stop_clicked,tooltip="Para a gravação",icon=ft.Icons.STOP,icon_color="pink600")
     button_row = ft.Row([start_button, stop_button], alignment=ft.MainAxisAlignment.CENTER, spacing=10)
     
     # Add widgets to page

@@ -23,7 +23,7 @@ async def main(page: ft.Page):
         vertical_lines=ft.border.BorderSide(3, "blue"),
         horizontal_lines=ft.border.BorderSide(1, "green"),
         border_radius=10,
-        heading_row_color=ft.colors.BLACK12,
+        heading_row_color=ft.Colors.BLACK12,
         #table data
         columns=[
             ft.DataColumn(ft.Text("Data")),
